@@ -1,0 +1,35 @@
+{
+    "ROS2.distro": "jazzy",
+    "python.autoComplete.extraPaths": [
+        "/home/yoonki/ros/dev_ws/build/pkg_topic",
+        "/home/yoonki/ros/dev_ws/install/pkg_topic/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_tf",
+        "/home/yoonki/ros/dev_ws/install/pkg_tf/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_service",
+        "/home/yoonki/ros/dev_ws/install/pkg_service/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_param",
+        "/home/yoonki/ros/dev_ws/install/pkg_param/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_action",
+        "/home/yoonki/ros/dev_ws/install/pkg_action/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/install/pkg_interfaces/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_helloworld_py",
+        "/home/yoonki/ros/dev_ws/install/pkg_helloworld_py/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/yoonki/ros/dev_ws/build/pkg_topic",
+        "/home/yoonki/ros/dev_ws/install/pkg_topic/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_tf",
+        "/home/yoonki/ros/dev_ws/install/pkg_tf/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_service",
+        "/home/yoonki/ros/dev_ws/install/pkg_service/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_param",
+        "/home/yoonki/ros/dev_ws/install/pkg_param/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_action",
+        "/home/yoonki/ros/dev_ws/install/pkg_action/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/install/pkg_interfaces/lib/python3.12/site-packages",
+        "/home/yoonki/ros/dev_ws/build/pkg_helloworld_py",
+        "/home/yoonki/ros/dev_ws/install/pkg_helloworld_py/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
