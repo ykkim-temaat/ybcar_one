@@ -1,15 +1,17 @@
 ekf_filter_node:
   ros__parameters:
-    frequency: 30.0  # 필터가 위치를 계산하고 TF를 발행하는 주기입니다. (초당 30번)
+    use_sim_time: false
+    # frequency: 30.0  # 필터가 위치를 계산하고 TF를 발행하는 주기입니다. (초당 30번)
+    frequency: 10.0
     sensor_timeout: 0.1 # 0.1초 동안 센서 데이터가 안 들어오면 이전 데이터를 기반으로 예측합니다.
     two_d_mode: true # 로봇이 평면(바닥)에서만 움직이므로 Z축, Roll, Pitch 계산을 무시하여 성능을 높입니다.
     publish_tf: true # 동적 TF(odom_frame -> base_link)를 실시간으로 발행하게 하는 핵심 스위치입니다.
 
     # --- 프레임 설정 ---
     map_frame: map
-    odom_frame: odom_frame   # odom_raw 토픽이 사용하는 기준 좌표계 
-    base_link_frame: base_link # URDF에 명시된 로봇의 중심 좌표계 이름입니다.
-    world_frame: odom_frame  # 현재 로봇의 위치를 odom_frame 기준으로 계산하겠다는 의미입니다.
+    odom_frame: odom   # odom_raw 토픽이 사용하는 기준 좌표계 
+    base_link_frame: base_footprint # URDF에 명시된 로봇의 중심 좌표계 이름입니다.
+    world_frame: odom  # 현재 로봇의 위치를 odom_frame 기준으로 계산하겠다는 의미입니다.
 
     # --- 바퀴 오도메트리 센서 융합 설정 ---
     odom0: /odom_raw

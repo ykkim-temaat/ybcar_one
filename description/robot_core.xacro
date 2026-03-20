@@ -3,4 +3,24 @@
 
     <xacro:include filename="MicroROS.urdf" />
 
+    <link name="base_footprint"/>
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/> <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="laser_frame"/>
+    <joint name="laser_bridge_joint" type="fixed">
+        <parent link="radar_Link"/>
+        <child link="laser_frame"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/> 
+    </joint>
+
+    <link name="imu_frame"/>
+    <joint name="imu_bridge_joint" type="fixed">
+        <parent link="imu_Link"/>
+        <child link="imu_frame"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/> 
+    </joint>
+
 </robot>

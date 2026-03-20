@@ -27,6 +27,14 @@ def generate_launch_description():
         output='screen',
         parameters=[params]
     )
+    
+    # joint_state_publisher 노드 (GUI 없음)
+    node_joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        parameters=[{'use_sim_time': use_sim_time}]
+    )
 
     # Launch!
     return LaunchDescription([
@@ -35,5 +43,6 @@ def generate_launch_description():
             default_value='false',
             description='Use sim time if true'),
 
-        node_robot_state_publisher
+        node_robot_state_publisher,
+        node_joint_state_publisher,     # 백그라운드 퍼블리셔 
     ])
