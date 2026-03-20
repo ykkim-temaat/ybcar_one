@@ -1,0 +1,30 @@
+ekf_filter_node:
+  ros__parameters:
+    frequency: 30.0  # 필터가 위치를 계산하고 TF를 발행하는 주기입니다. (초당 30번)
+    sensor_timeout: 0.1 # 0.1초 동안 센서 데이터가 안 들어오면 이전 데이터를 기반으로 예측합니다.
+    two_d_mode: true # 로봇이 평면(바닥)에서만 움직이므로 Z축, Roll, Pitch 계산을 무시하여 성능을 높입니다.
+    publish_tf: true # 동적 TF(odom_frame -> base_link)를 실시간으로 발행하게 하는 핵심 스위치입니다.
+
+    # --- 프레임 설정 ---
+    map_frame: map
+    odom_frame: odom_frame   # odom_raw 토픽이 사용하는 기준 좌표계 
+    base_link_frame: base_link # URDF에 명시된 로봇의 중심 좌표계 이름입니다.
+    world_frame: odom_frame  # 현재 로봇의 위치를 odom_frame 기준으로 계산하겠다는 의미입니다.
+
+    # --- 바퀴 오도메트리 센서 융합 설정 ---
+    odom0: /odom_raw
+    odom0_config: [false, false, false, # X, Y, Z 절대 위치 (사용 안 함: 바퀴 미끄러짐 오차 방지)
+                   false, false, false, # Roll, Pitch, Yaw 절대 각도 (사용 안 함)
+                   true,  true,  false, # X, Y, Z 선속도 (X, Y 방향으로 이동하는 속도를 믿음)
+                   false, false, true,  # Roll, Pitch, Yaw 각속도 (로봇이 회전하는 속도를 믿음)
+                   false, false, false] # X, Y, Z 선형 가속도 (사용 안 함)
+
+    # --- IMU 센서 융합 설정 ---
+    imu0: /imu
+    imu0_config: [false, false, false, # X, Y, Z 절대 위치 (IMU는 위치를 모름)
+                  false, false, true,  # Roll, Pitch, Yaw 절대 각도 (Yaw 각도, 즉 방향을 매우 신뢰함)
+                  false, false, false, # X, Y, Z 선속도 (IMU는 속도를 모름)
+                  false, false, true,  # Roll, Pitch, Yaw 각속도 (회전 속도를 믿음)
+                  true,  false, false] # X, Y, Z 선형 가속도 (앞으로 치고 나가는 가속도를 믿음)
+    
+    imu0_remove_gravitational_acceleration: true # IMU 데이터에 포함된 중력 가속도를 제거하여 순수한 움직임만 추출합니다.

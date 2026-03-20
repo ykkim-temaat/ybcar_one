@@ -9,18 +9,17 @@ from launch_ros.actions import Node
 
 import xacro
 
-
 def generate_launch_description():
 
-    # Check if we're told to use sim time
+    # Launch Configuration 변수 설정
     use_sim_time = LaunchConfiguration('use_sim_time')
 
-    # Process the URDF file
+    # URDF(Xacro) 파일 처리
     pkg_path = os.path.join(get_package_share_directory('ybcar_one'))
-    xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
+    xacro_file = os.path.join(pkg_path, 'description', 'robot.urdf.xacro')
     robot_description_config = xacro.process_file(xacro_file).toxml()
     
-    # Create a robot_state_publisher node
+    # robot_state_publisher 노드 생성
     params = {'robot_description': robot_description_config, 'use_sim_time': use_sim_time}
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -28,7 +27,6 @@ def generate_launch_description():
         output='screen',
         parameters=[params]
     )
-
 
     # Launch!
     return LaunchDescription([
