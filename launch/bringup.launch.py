@@ -39,6 +39,17 @@ def generate_launch_description():
         remappings=[('odometry/filtered', '/odom')]
     )
 
+    twist_mux_config = os.path.join(get_package_share_directory(pkg_name),
+                                         'config', 'twist_mux.yaml')
+    twist_mux = Node(
+        package='twist_mux',
+        executable='twist_mux',
+        output='screen',
+        remappings=[('/cmd_vel_out', '/cmd_vel')],
+        parameters=[
+            {'use_sim_time': False},
+            twist_mux_config])
+
     # Launch!
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -47,5 +58,6 @@ def generate_launch_description():
             description='Use sim time if true'),
 
         rsp_launch, # 불러온 rsp.launch.py 실행
-        node_ekf    # EKF 노드 실행
+        node_ekf,   # EKF 노드 실행
+        twist_mux,  # twist_mux 노드 실행    
     ])
