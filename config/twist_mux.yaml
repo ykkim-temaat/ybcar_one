@@ -17,4 +17,8 @@ twist_mux:
         topic   : cmd_vel_nav
         timeout : 0.5
         priority: 70
+      watchdog:
+          topic: cmd_vel_watchdog
+          timeout: 0.0 # 워치독은 타임아웃 없이 
+          priority: 10
         

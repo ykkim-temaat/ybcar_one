@@ -22,7 +22,7 @@ slam_toolbox:
     # if you'd like to immediately start continuing a map at a given pose
     # or at the dock, but they are mutually exclusive, if pose is given
     # will use pose
-    map_file_name: /home/yoonki/ros/ybcar_ws/my_map4_serial
+    map_file_name: /home/yoonki/ros/ybcar_ws/src/ybcar_one/maps/my_map1_serial
     # map_start_pose: [0.0, 0.0, 0.0]
     map_start_at_dock: true
 

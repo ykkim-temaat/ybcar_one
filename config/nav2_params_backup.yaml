@@ -1,10 +1,15 @@
 amcl:
   ros__parameters:
-    alpha1: 0.2
-    alpha2: 0.2
-    alpha3: 0.2
-    alpha4: 0.2
-    alpha5: 0.2
+    # alpha1: 0.2 # default
+    # alpha2: 0.2 # default
+    # alpha3: 0.2 # default
+    # alpha4: 0.2 # default
+    # alpha5: 0.2 # default
+    alpha1: 0.8  # (기존 0.2 -> 0.8) 회전할 때 발생하는 회전 오차 예측치 증가
+    alpha2: 0.2  # 직진할 때 발생하는 회전 오차
+    alpha3: 0.2  # 직진할 때 발생하는 직진 오차
+    alpha4: 0.5  # (기존 0.2 -> 0.5) 회전할 때 발생하는 직진 오차 예측치 증가
+    alpha5: 0.2  # (옴니휠 전용이므로 Differential 구동이면 무시 가능)
     base_frame_id: "base_footprint"
     beam_skip_distance: 0.5
     beam_skip_error_threshold: 0.9
@@ -17,7 +22,8 @@ amcl:
     laser_min_range: -1.0
     laser_model_type: "likelihood_field"
     max_beams: 60
-    max_particles: 2000
+    # max_particles: 2000 # default
+    max_particles: 4000 # 위치를 더 정확히 추정 
     min_particles: 500
     odom_frame_id: "odom"
     pf_err: 0.05
@@ -30,8 +36,10 @@ amcl:
     sigma_hit: 0.2
     tf_broadcast: true
     transform_tolerance: 1.0
-    update_min_a: 0.2
-    update_min_d: 0.25
+    # update_min_a: 0.2 # default
+    # update_min_d: 0.25  # default
+    update_min_a: 0.1 # 위치보정 빈도 향상, 10cm 마다
+    update_min_d: 0.05 # 위치보정 빈도 향상, 약 2.8도 마다 
     z_hit: 0.5
     z_max: 0.05
     z_rand: 0.5
@@ -67,9 +75,8 @@ bt_navigator:
 
 controller_server:
   ros__parameters:
-    # enable_stamped_cmd_vel: true
-    enable_stamped_cmd_vel: false # default
-    # controller_frequency: 20.0
+    enable_stamped_cmd_vel: false
+    # controller_frequency: 20.0  # default
     controller_frequency: 10.0
     costmap_update_timeout: 0.30
     min_x_velocity_threshold: 0.001
@@ -95,16 +102,20 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.35
-      yaw_goal_tolerance: 0.5
+      xy_goal_tolerance: 0.25 # default
+      yaw_goal_tolerance: 0.25  # default
+      # xy_goal_tolerance: 0.35 # 목표지점 반경 35cm 이내 
+      # yaw_goal_tolerance: 0.5 # 각도가 약 28도 틀어져도 도착으로 간주
+
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
-      # time_steps: 56
-      time_steps: 30
-      # model_dt: 0.05
-      model_dt: 0.1
-      # batch_size: 2000
-      batch_size: 1000
+      # time_steps: 56  # default
+      time_steps: 30 
+      # model_dt: 0.05  # default
+      model_dt: 0.1  
+      # batch_size: 2000  # default
+      batch_size: 1000 
+
       ax_max: 3.0
       ax_min: -3.0
       ay_max: 3.0
@@ -113,11 +124,14 @@ controller_server:
       vx_std: 0.2
       vy_std: 0.2
       wz_std: 0.4
-      vx_max: 0.5
-      # vx_min: -0.35
-      vx_min: 0.0
+      # vx_max: 0.5 # default
+      # vx_min: -0.35 # default
+      vx_max: 0.25  # 전진 최고속도 (m/s)
+      vx_min: -0.15 # 후진 최고속도 (m/s)
       vy_max: 0.5
-      wz_max: 1.9
+      # wz_max: 1.9 # default
+      wz_max: 0.4 # 제자리 회전 최고속도 (rad/s)
+
       iteration_count: 1
       prune_distance: 1.7
       transform_tolerance: 0.1
@@ -304,8 +318,7 @@ smoother_server:
 
 behavior_server:
   ros__parameters:
-    # enable_stamped_cmd_vel: true
-    enable_stamped_cmd_vel: false # default
+    enable_stamped_cmd_vel: false 
     local_costmap_topic: local_costmap/costmap_raw
     global_costmap_topic: global_costmap/costmap_raw
     local_footprint_topic: local_costmap/published_footprint
@@ -327,8 +340,11 @@ behavior_server:
     robot_base_frame: base_link
     transform_tolerance: 0.1
     simulate_ahead_time: 2.0
-    max_rotational_vel: 1.0
-    min_rotational_vel: 0.4
+    # max_rotational_vel: 1.0 # default
+    # min_rotational_vel: 0.4 # default
+    max_rotational_vel: 0.5 # 복구 회전시 최고속도
+    min_rotational_vel: 0.2 # 복구 회전시 최저속
+
     rotational_acc_lim: 3.2
 
 waypoint_follower:
@@ -367,13 +383,15 @@ route_server:
 
 velocity_smoother:
   ros__parameters:
-    # enable_stamped_cmd_vel: true
-    enable_stamped_cmd_vel: false # default
+    enable_stamped_cmd_vel: false 
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.5, 0.0, 2.0]
-    min_velocity: [-0.5, 0.0, -2.0]
+    # max_velocity: [0.5, 0.0, 2.0]   # default
+    # min_velocity: [-0.5, 0.0, -2.0] # default
+    max_velocity: [0.25, 0.0, 1.0]  # 속도 절반 감소 
+    min_velocity: [-0.25, 0.0, -1.0]  # 속도 절반 감소 
+
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
     odom_topic: "odom"
@@ -387,7 +405,6 @@ collision_monitor:
     odom_frame_id: "odom"
     cmd_vel_in_topic: "cmd_vel_smoothed"
     cmd_vel_out_topic: "cmd_vel"
-    # cmd_vel_out_topic: "cmd_vel_nav"
     state_topic: "collision_monitor_state"
     transform_tolerance: 0.2
     source_timeout: 1.0

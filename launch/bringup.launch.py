@@ -50,6 +50,13 @@ def generate_launch_description():
             {'use_sim_time': False},
             twist_mux_config])
 
+    # motor_watchdog = Node(
+    #     package=pkg_name,
+    #     executable='motor_watchdog.py',
+    #     name='motor_watchdog',
+    #     output='screen'
+    # )
+
     # Launch!
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -59,5 +66,6 @@ def generate_launch_description():
 
         rsp_launch, # 불러온 rsp.launch.py 실행
         node_ekf,   # EKF 노드 실행
-        twist_mux,  # twist_mux 노드 실행    
+        twist_mux,  # twist_mux 노드 실행
+        # motor_watchdog, # 모터 워치독 실행
     ])
