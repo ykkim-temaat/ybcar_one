@@ -20,7 +20,7 @@ def generate_launch_description():
 
     # 3. 파일 기본 경로 하드코딩 (터미널에서 안 적어주면 이 경로를 씁니다)
     # 회원님의 맵 절대 경로
-    default_map_path = '/home/yoonki/ros/ybcar_ws/src/ybcar_one/maps/my_map1.yaml' 
+    default_map_path = '/home/yoonki/ros/ybcar_ws/src/ybcar_one/maps/my_map2.yaml' 
     # 회원님의 파라미터 파일 경로 (install 폴더 기준)
     default_params_path = os.path.join(ybcar_one_dir, 'config', 'nav2_params.yaml')
 
